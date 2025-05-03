@@ -1,0 +1,253 @@
+#adicao das bibliotecas
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+#importando arquivo e extraindo coluna
+dataset = pd.read_csv('spotify-2023-cleaned.csv',delimiter=',')
+
+columns = dataset.columns.tolist()
+for column in columns:
+    print(column)
+
+
+#Pergunta 1:
+#Em qual período do ano foi lançada a musica mais tocada de 2023?
+
+seasons_dic = {
+    'spring':0,
+    'summer':0,
+    'autumn':0,
+    'winter':0,
+}
+
+def get_seasons(month):
+    if month in [12,1,2]:
+        seasons_dic['winter'] += 1
+    elif month in [3,4,5]:
+        seasons_dic['spring'] += 1
+    elif month in [6,7,8]:
+        seasons_dic['summer'] += 1
+    elif month in [9,10,11]:
+        seasons_dic['autumn'] += 1
+        
+dataset["released_month"].apply(get_seasons)
+
+print(seasons_dic)
+
+
+#Pergunta 2:
+#Qual foi o artista com mais músicas no ranking?
+
+
+from collections import Counter
+import re
+
+# Função para separar artistas por vírgula, "feat.", "&", " x ", etc.
+def extrair_artistas(entrada):
+    if pd.isna(entrada):
+        return []
+    entrada = entrada.lower()
+    # Substituir conectores comuns por vírgula
+    entrada = re.sub(r"\s?(feat\.|featuring|&|,| x | and )\s?", ",", entrada, flags=re.IGNORECASE)
+    return [a.strip().title() for a in entrada.split(",") if a.strip()]
+
+# Aplicar a função a todas as linhas e contar os artistas
+todos_artistas = dataset["artist(s)_name"].dropna().apply(extrair_artistas)
+
+# Achatar a lista de listas e contar frequências
+contador = Counter([artista for sublista in todos_artistas for artista in sublista])
+
+# Mostrar número de artistas únicos
+print(f"Total de artistas únicos (considerando colaborações): {len(contador)}")
+
+# Mostrar os 5 artistas com mais músicas
+print("Top 5 artistas com mais músicas no ranking:")
+for artista, count in contador.most_common():
+    print(f"{artista}: {count} músicas")
+
+#Pergunta 3:
+#Qual artista brasileiro com mais musicas no ranking?
+
+brazilian_artists = [
+    "Anitta", "Ana Castela", "Chefin", "Dennis", "Dj Biel Do Furduncinho",
+    "Dj Chris No Beat", "Dj Gabriel Do Borel", "Dj Lk Da Escência", "Dj Matt D",
+    "Dj R", "Dj Win", "Gustah", "Gustavo Mioto", "Kayblack", "Leo Santana", "L7nnon",
+    "Luísa Sonza", "Maiara", "Mari Fernandez", "Marília Mendonça", "Mc Caverinha",
+    "Mc Frog", "Mc Jhenny", "Mc Kevin O Chris", "Mc Livinho", "Mc Menor Hr", "Mc Menor Sg",
+    "Mc Paiva Zs", "Mc Pedrinho", "Mc Ryan Sp", "Mc Tairon", "Mc Vitin Da Igrejinha",
+    "Mc Xenon", "Melody", "Os Gêmeos Da Putaria", "Pedro Sampaio", "Simone Mendes",
+    "Tchakabum", "Teto", "Treyce", "Veigh", "Wiu", "Xamã", "Zé Felipe", "Zé Neto"
+]
+
+# Filtrar músicas com artistas brasileiros
+# Achatar a lista de listas e contar frequências
+contador = Counter([artista for sublista in todos_artistas for artista in sublista])
+
+# Mostrar número de artistas únicos
+print(f"Total de artistas únicos (considerando colaborações): {len(contador)}")
+
+# Mostrar os 5 artistas com mais músicas
+print("Top 5 artistas com mais músicas no ranking:")
+for artista, count in contador.most_common():
+    if artista in brazilian_artists:
+        brazilian_artist, musics = artista, count
+        break
+
+print(f'Artista brasileiro com mais músicas: {artista}, total de {count} musica(s)')
+
+#Pergunta 4:
+
+#Quantos artistas são necessários para ter uma boa música
+#Existe relação entre o número de artistas e o ranking da música?
+
+# Selecionar as colunas de interesse
+colunas_interesse = ['artist_count', 'streams']
+dataset_selecionado = dataset[colunas_interesse]
+
+# Calcular a matriz de correlação
+matriz_correlacao = dataset_selecionado.corr()
+
+# Extrair a correlação específica entre 'artist_count' e 'streams'
+# .loc acessa valores pelos nomes das linhas/colunas
+correlacao_especifica = matriz_correlacao.loc['artist_count', 'streams']
+
+print(f"\n--- Correlação entre 'artist_count' e 'streams' ---")
+print(matriz_correlacao)
+print(f"\nValor da correlação específica: {correlacao_especifica:.4f}") # Formatado com 4 casas decimais
+
+
+
+import seaborn as sns
+print("\n--- Gerando Gráficos ---")
+
+# --- Gráfico 1: Scatter Plot (Gráfico de Dispersão) ---
+plt.figure(figsize=(10, 6)) # Define o tamanho da figura do gráfico
+sns.scatterplot(data=dataset, x='artist_count', y='streams', alpha=0.5) # alpha controla a transparência dos pontos
+plt.title('Relação entre Número de Artistas e Streams')
+plt.xlabel('Número de Artistas (artist_count)')
+plt.ylabel('Número de Streams')
+plt.grid(True) # Adiciona uma grade ao gráfico
+plt.show() # Exibe o gráfico
+    
+print("Gráfico de Dispersão gerado.")
+# Interpretação: Observe se há alguma tendência visível. Os pontos sobem, descem ou ficam espalhados sem padrão claro conforme o número de artistas aumenta?
+
+# --- Gráfico 2: Box Plot ---
+# O box plot é útil para ver a distribuição dos streams para cada contagem de artistas.
+# Pode ficar muito poluído se houver muitos valores únicos em 'artist_count'.
+# Vamos limitar aos casos mais comuns se necessário (ex: até 4 artistas).
+max_artistas_boxplot = dataset['artist_count'].max() # Encontra o máximo de artistas no dataset
+if max_artistas_boxplot > 8: # Se houver músicas com muitos artistas, limitamos o boxplot para clareza
+    print(f"Limitando o Box Plot para até 8 artistas para melhor visualização (máximo encontrado: {max_artistas_boxplot}).")
+    df_boxplot = dataset[dataset['artist_count'] <= 8]
+else:
+    df_boxplot = dataset
+
+plt.figure(figsize=(12, 7))
+sns.boxplot(data=df_boxplot, x='artist_count', y='streams', palette='viridis')
+plt.title('Distribuição de Streams por Número de Artistas')
+plt.xlabel('Número de Artistas (artist_count)')
+plt.ylabel('Número de Streams')
+# Optional: Melhorar a legibilidade do eixo y se os números forem muito grandes
+plt.ticklabel_format(style='plain', axis='y') # Evita notação científica no eixo Y
+plt.yscale('log') # Usar escala logarítmica se a variação de streams for muito grande (muitos outliers)
+plt.grid(axis='y', linestyle='--', alpha=0.7)
+plt.show()
+
+print("Box Plot gerado.")
+    # Interpretação: Compare as "caixas" para cada número de artistas.
+    # A linha no meio da caixa é a mediana (valor central).
+    # A altura da caixa mostra a dispersão dos dados (IQR).
+    # Os "bigodes" (linhas que saem da caixa) geralmente cobrem 99% dos dados.
+    # Pontos fora dos bigodes são outliers.
+    # Veja se a mediana dos streams muda consistentemente com o número de artistas.
+    # Veja se a dispersão (tamanho da caixa) muda.
+
+#Pergunta 5:
+#Em quantas playlists a música está?
+
+# Converter todas as colunas relevantes para numéricas
+dataset['in_spotify_playlists'] = pd.to_numeric(dataset['in_spotify_playlists'], errors='coerce')
+dataset['in_apple_playlists'] = pd.to_numeric(dataset['in_apple_playlists'], errors='coerce')
+dataset['in_deezer_playlists'] = pd.to_numeric(dataset['in_deezer_playlists'], errors='coerce')
+
+# Definir a função de soma
+def get_total_in_playlist(row):
+    return (
+        row['in_spotify_playlists'] +
+        row['in_apple_playlists'] +
+        row['in_deezer_playlists']
+    )
+
+# Aplicar corretamente
+dataset['total_in_playlist'] = dataset.apply(get_total_in_playlist, axis=1) 
+print(dataset[['track_name','total_in_playlist']])
+
+
+#Pergunta 6:
+#Qual foi a musica mais escutada no mundo?
+
+top_streams = dataset[["track_name", "streams"]].sort_values(by="streams", ascending=False).head(10)
+print(top_streams)
+
+plt.figure(figsize=(10, 6))
+plt.barh(top_streams["track_name"], top_streams["streams"], color="mediumseagreen")
+plt.xlabel("Número de Streams")
+plt.ylabel("Música")
+plt.title("Top 10 Músicas Mais Ouvidas (Spotify 2023)")
+plt.gca().invert_yaxis()
+plt.tight_layout()
+plt.show()
+
+#Pergunta 7:
+#Qual a que menos foi escutada no ranking?
+
+least_streams = dataset[["track_name", "streams"]].sort_values(by="streams", ascending=False).tail(10)
+
+plt.figure(figsize=(10, 6))
+plt.barh(least_streams["track_name"], least_streams["streams"], color="mediumseagreen")
+plt.xlabel("Número de Streams")
+plt.ylabel("Música")
+plt.title("Top 10 Músicas Menos Ouvidas (Spotify 2023)")
+plt.gca().invert_yaxis()
+plt.tight_layout()
+plt.show()
+
+
+#Pergunta 8:
+#Qual mês teve mais musicas no ranking ?
+
+months_dict = {
+    'january':0,
+    'february':0,
+    'march':0,
+    'april':0,
+    'may':0,
+    'june':0,
+    'july':0,
+    'august':0,
+    'september':0,
+    'october':0,
+    'november':0,
+    'december':0,
+}
+        
+teste = np.unique(dataset['released_month'], return_counts=True)
+
+index = 0
+for key, value in months_dict.items():
+    months_dict[key] = int(teste[1][index])
+    index += 1
+
+# Criar gráfico de barras
+plt.figure(figsize=(10, 6))
+plt.bar(months_dict.keys(), months_dict.values(), color="cornflowerblue")
+plt.xlabel("Mês de Lançamento")
+plt.ylabel("Número de Músicas Lançadas")
+plt.title("Lançamentos de Músicas por Mês (Spotify 2023)")
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
+
