@@ -6,9 +6,9 @@
  
 3- Qual artista brasileiro com mais musicas no ranking?
  
-4- Qual a porcentagem que o Brasil aparece no ranking?
+4- Qual a porcentagem que o Brasil aparece no ranking? -> Rever porque teria que ver a nacionalidade de cada artista
  
-5- Quais os países com maior número de músicas no ranking?
+5- Quais os países com maior número de músicas no ranking? -> Rever pelo mesmo motivo da anterior
 
 6- quantos artistas é necessário para ter uma boa musica ?
   
@@ -20,3 +20,4 @@
  
 10- qual mês q teve mais musicas no ranking ?
  
+
