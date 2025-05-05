@@ -251,3 +251,66 @@ plt.xticks(rotation=45)
 plt.tight_layout()
 plt.show()
 
+
+#9 - Verificar se existe uma relação entre o mês de lançamento e o ano de lançamento:
+
+print("Calculando a média de streams...")
+avg_streams_per_period = dataset.groupby(['released_year', 'released_month'])['streams'].mean().unstack(fill_value=0)
+
+print("\nTabela: Média de Streams por Ano/Mês de Lançamento:")
+# Formatando para melhor leitura (opcional)
+print(avg_streams_per_period.map(lambda x: f"{x:,.0f}" if x > 0 else "0"))
+print("-" * 40)
+import seaborn as sns
+
+print("Gerando Heatmap da Média de Streams...")
+plt.figure(figsize=(12, 7)) # Ajuste o tamanho conforme necessário
+sns.heatmap(avg_streams_per_period,
+            cmap='viridis',      # Esquema de cores (outros: 'plasma', 'magma', 'YlGnBu')
+            annot=False,          # Mostrar os valores numéricos no heatmap
+            fmt=".0f",           # Formato dos números (sem casas decimais)
+            linewidths=.5,       # Linhas separando as células
+            linecolor='lightgray', # Cor das linhas
+            cbar_kws={'label': 'Média de Streams'}) # Legenda da barra de cor
+plt.xlabel('Mês de Lançamento')
+plt.ylabel('Ano de Lançamento')
+plt.title('Média de Streams por Mês e Ano de Lançamento')
+plt.yticks(rotation=0) # Garante que os anos fiquem na horizontal
+plt.xticks(rotation=45) # Rotaciona os meses para melhor leitura se forem muitos
+plt.tight_layout() # Ajusta o layout para evitar sobreposição
+plt.show()
+
+
+#10 - Qual mês teve mais musicas no ranking ?
+
+months_dict = {
+    'january':0,
+    'february':0,
+    'march':0,
+    'april':0,
+    'may':0,
+    'june':0,
+    'july':0,
+    'august':0,
+    'september':0,
+    'october':0,
+    'november':0,
+    'december':0,
+}
+        
+teste = np.unique(dataset['released_month'], return_counts=True)
+
+index = 0
+for key, value in months_dict.items():
+    months_dict[key] = int(teste[1][index])
+    index += 1
+
+# Criar gráfico de barras
+plt.figure(figsize=(10, 6))
+plt.bar(months_dict.keys(), months_dict.values(), color="cornflowerblue")
+plt.xlabel("Mês de Lançamento")
+plt.ylabel("Número de Músicas Lançadas")
+plt.title("Lançamentos de Músicas por Mês (Spotify 2023)")
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
