@@ -1,23 +1,22 @@
 # ProjetoC111
 
-1- Em qual período do ano foi lançada a musica mais tocada de 2023?
- 
-2- Qual foi o artista com mais músicas no ranking?
- 
-3- Qual artista brasileiro com mais musicas no ranking?
- 
-4- Qual a porcentagem que o Brasil aparece no ranking? -> Rever porque teria que ver a nacionalidade de cada artista
- 
-5- Quais os países com maior número de músicas no ranking? -> Rever pelo mesmo motivo da anterior
+#01 - Existe relação entre horas de uso diário e qualidade do sono?
 
-6- quantos artistas é necessário para ter uma boa musica ?
-  
-7- em quantas playlists essa musica está?
- 
-8- qual foi a musica mais escutada no mundo ?
- 
-9- com a que menos foi escutada no ranking ?
- 
-10- qual mês q teve mais musicas no ranking ?
- 
+#02 - Existe relação entre horas de uso diário e duração do sono?
+
+#03 - Qual plataforma possui a maior média de horas de uso diário?
+
+#04 - Como o uso das redes sociais varia entre faixas etárias?
+
+#05 - A qualidade do sono varia de acordo com o gênero?
+
+#06 - O nível acadêmico está relacionado ao tempo diário de uso?
+
+#07 - O tipo de dispositivo está relacionado ao tempo de uso diário?
+
+#08 - Quais plataformas são mais utilizadas em cada nível acadêmico?
+
+#09 - O uso adicional no fim de semana varia conforme a idade?
+
+#10 - Quais variáveis numéricas apresentam maior relação entre si?
 
