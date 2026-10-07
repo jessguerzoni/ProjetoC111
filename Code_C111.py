@@ -1,4 +1,3 @@
-#adicao das bibliotecas
 
 import numpy as np
 import pandas as pd
@@ -34,7 +33,6 @@ plt.show()
 
 #02 - Existe relação entre horas de uso diário e duração do sono?
 
-# --- Scatterplot com Seaborn ---
 plt.figure(figsize=(9, 5))
 sns.scatterplot(data=dataset, x='Daily_Usage_Hours', y='Sleep_Duration_Hours',
                 alpha=0.3, color='darkgreen')
@@ -47,7 +45,7 @@ plt.show()
 
 #03 - Qual plataforma possui a maior média de horas de uso diário?
 
-# Cálculo da média por plataforma
+# Cálculo da média 
 media_plataforma = dataset.groupby('Primary_Platform')['Daily_Usage_Hours'].mean().reset_index().sort_values(by='Daily_Usage_Hours', ascending=False)
 
 #Grafico de barras
