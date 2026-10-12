@@ -60,11 +60,11 @@ plt.ylabel('Média de horas de uso diário')
 plt.tight_layout()
 plt.show()
 
-#04 - Como o uso das redes sociais varia entre faixas etárias?
+#04 - O nível acadêmico está relacionado ao tempo diário de uso das redes sociais e ao desempenho acadêmico dos estudantes?
 
-#05 - A qualidade do sono varia de acordo com o gênero?
+#05 - O uso das redes sociais durante a noite está associado à duração e à qualidade do sono?
 
-#06 - O nível acadêmico está relacionado ao tempo diário de uso?
+#06 - A frequência de comparação com outras pessoas nas redes sociais está associada ao nível de estresse percebido e ao índice de saúde mental dos estudantes?
 
 #07 - O tipo de dispositivo está relacionado ao tempo de uso diário?
 
