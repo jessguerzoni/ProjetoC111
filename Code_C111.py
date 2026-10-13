@@ -134,7 +134,55 @@ plt.show()
 
 #06 - A frequência de comparação com outras pessoas nas redes sociais está associada ao nível de estresse percebido e ao índice de saúde mental dos estudantes?
 
-#07 - O tipo de dispositivo está relacionado ao tempo de uso diário?
+#7- O tipo de dispositivo está relacionado ao tempo de uso das redes sociais e à qualidade do sono?
+plt.figure(figsize=(10, 6))
+sns.boxplot(
+    data = dataset,
+    x = 'Device_Type',
+    y = 'Daily_Usage_Hours',
+    hue = 'Academic_Level'
+)
+plt.title('Uso diário por dispositivo e nível acadêmico')
+plt.legend(title='Nível acadêmico', bbox_to_anchor=(1.02, 1),loc='upper left')
+plt.tight_layout()
+plt.show()
+
+filtro_smartphones = dataset['Device_Type'].str.contains('Smartphone')
+smartphones = dataset[filtro_smartphones]
+
+notas, quantidade_notas = np.unique(smartphones['Sleep_Quality_Score'],return_counts=True)
+
+plt.figure(figsize=(16, 5))
+plt.subplot(1, 3, 1)
+plt.bar(notas, quantidade_notas)
+plt.xlabel('Nota de qualidade do sono')
+plt.ylabel('Quantidade de estudantes')
+plt.title('Qualidade do sono dos usuários de smartphones')
+
+filtro_tablet = dataset['Device_Type'].str.contains('Tablet')
+tablets = dataset[filtro_tablet]
+
+notasT, quantidade_notasT = np.unique(tablets['Sleep_Quality_Score'],return_counts=True)
+
+plt.subplot(1, 3, 2)
+plt.bar(notasT, quantidade_notasT)
+plt.xlabel('Nota de qualidade do sono')
+plt.ylabel('Quantidade de estudantes')
+plt.title('Qualidade do sono dos usuários de tablets')
+
+filtro_pc = dataset['Device_Type'].str.contains('Laptop/PC')
+pc = dataset[filtro_pc]
+
+notasPC, quantidade_notasPC = np.unique(pc['Sleep_Quality_Score'],return_counts=True)
+
+plt.subplot(1, 3, 3)
+plt.bar(notasPC, quantidade_notasPC)
+plt.xlabel('Nota de qualidade do sono')
+plt.ylabel('Quantidade de estudantes')
+plt.title('Qualidade do sono dos usuários de Laptop/PC')
+plt.tight_layout()
+plt.show()
+
 
 #08 - Quais plataformas são mais utilizadas em cada nível acadêmico?
 
