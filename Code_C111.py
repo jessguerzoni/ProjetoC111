@@ -1,4 +1,3 @@
-
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -62,7 +61,6 @@ plt.show()
 
 #04 - O nível acadêmico está relacionado ao tempo diário de uso das redes sociais e ao desempenho acadêmico dos estudantes?
 
-ds = pd.read_csv('Social_media_impact_on_life_limpo.csv', delimiter=',')
 print(ds.columns)
 plt.figure(figsize=(12, 5))
 
@@ -97,7 +95,6 @@ plt.show()
 
 #05 - O uso das redes sociais durante a noite está associado à duração e à qualidade do sono?
 
-ds = pd.read_csv('Social_media_impact_on_life_limpo.csv', delimiter=',')
 print(ds.columns)
 
 # Gráfico 1: média de horas de sono por uso noturno
@@ -134,7 +131,40 @@ plt.show()
 
 #06 - A frequência de comparação com outras pessoas nas redes sociais está associada ao nível de estresse percebido e ao índice de saúde mental dos estudantes?
 
+print(ds.columns)
+plt.figure(figsize=(12, 5))
+
+# Gráfico 1: comparação social e estresse percebido
+plt.subplot(1, 2, 1)
+
+sns.barplot(
+    data=ds,
+    x='Social_Comparison_Frequency',
+    y='Perceived_Stress_Score',
+    errorbar=None,
+)
+
+plt.xlabel('Frequência de comparação social')
+plt.ylabel('Média do estresse percebido')
+plt.title('Comparação social e estresse')
+
+# Gráfico 2: comparação social e saúde mental
+plt.subplot(1, 2, 2)
+
+sns.boxplot(
+    data=ds,
+    x='Social_Comparison_Frequency',
+    y='Mental_Health_Index'
+)
+
+plt.xlabel('Frequência de comparação social')
+plt.ylabel('Índice de saúde mental')
+plt.title('Comparação social e saúde mental')
+
+plt.show()
+
 #07- O tipo de dispositivo está relacionado ao tempo de uso das redes sociais e à qualidade do sono?
+
 plt.figure(figsize=(10, 6))
 sns.boxplot(
     data = dataset,
