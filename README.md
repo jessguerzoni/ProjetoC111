@@ -6,17 +6,17 @@
 
 #03 - Qual plataforma possui a maior média de horas de uso diário?
 
-#04 - Como o uso das redes sociais varia entre faixas etárias?
+#04 - O nível acadêmico está relacionado ao tempo diário de uso das redes sociais e ao desempenho acadêmico dos estudantes?
 
-#05 - A qualidade do sono varia de acordo com o gênero?
+#05 - O uso das redes sociais durante a noite está associado à duração e à qualidade do sono?
 
-#06 - O nível acadêmico está relacionado ao tempo diário de uso?
+#06 - A frequência de comparação com outras pessoas nas redes sociais está associada ao nível de estresse percebido e ao índice de saúde mental dos estudantes?
 
-#07 - O tipo de dispositivo está relacionado ao tempo de uso diário?
+#07 - O tipo de dispositivo está relacionado ao tempo de uso das redes sociais e à qualidade do sono?
 
-#08 - Quais plataformas são mais utilizadas em cada nível acadêmico?
+#08 - Quais plataformas são mais utilizadas em cada nível acadêmico e como o uso delas se relaciona ao estresse percebido?
 
-#09 - O uso adicional no fim de semana varia conforme a idade?
+#09 - Quais faixas etárias apresentam maior tempo diário de uso das redes sociais e maior uso adicional nos finais de semana?
 
 #10 - Quais variáveis numéricas apresentam maior relação entre si?
 
