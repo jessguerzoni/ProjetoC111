@@ -44,7 +44,7 @@ plt.show()
 
 #03 - Qual plataforma possui a maior média de horas de uso diário?
 
-# Cálculo da média 
+# Cálculo da média
 media_plataforma = dataset.groupby('Primary_Platform')['Daily_Usage_Hours'].mean().reset_index().sort_values(by='Daily_Usage_Hours', ascending=False)
 
 #Grafico de barras
@@ -61,14 +61,14 @@ plt.show()
 
 #04 - O nível acadêmico está relacionado ao tempo diário de uso das redes sociais e ao desempenho acadêmico dos estudantes?
 
-print(ds.columns)
+print(dataset.columns)
 plt.figure(figsize=(12, 5))
 
 # Gráfico 1: média de horas de uso por nível acadêmico
 plt.subplot(1, 2, 1)
 
 sns.barplot(
-    data=ds,
+    data=dataset,
     x='Academic_Level',
     y='Daily_Usage_Hours',
     errorbar=None
@@ -82,7 +82,7 @@ plt.title('Uso diário das redes sociais')
 plt.subplot(1, 2, 2)
 
 sns.boxplot(
-    data=ds,
+    data=dataset,
     x='Academic_Level',
     y='Academic_Performance_GPA'
 )
@@ -95,7 +95,7 @@ plt.show()
 
 #05 - O uso das redes sociais durante a noite está associado à duração e à qualidade do sono?
 
-print(ds.columns)
+print(dataset.columns)
 
 # Gráfico 1: média de horas de sono por uso noturno
 plt.figure(figsize=(16, 5))
@@ -103,7 +103,7 @@ plt.figure(figsize=(16, 5))
 plt.subplot(1, 3, 1)
 
 sns.barplot(
-    data=ds,
+    data=dataset,
     x='Late_Night_Usage',
     y='Sleep_Duration_Hours',
     errorbar=None
@@ -117,7 +117,7 @@ plt.title('Duração do sono por uso noturno')
 plt.subplot(1, 3, 2)
 
 sns.histplot(
-    data=ds,
+    data=dataset,
     x='Sleep_Duration_Hours',
     hue='Late_Night_Usage',
     kde=True
@@ -131,14 +131,14 @@ plt.show()
 
 #06 - A frequência de comparação com outras pessoas nas redes sociais está associada ao nível de estresse percebido e ao índice de saúde mental dos estudantes?
 
-print(ds.columns)
+print(dataset.columns)
 plt.figure(figsize=(12, 5))
 
 # Gráfico 1: comparação social e estresse percebido
 plt.subplot(1, 2, 1)
 
 sns.barplot(
-    data=ds,
+    data=dataset,
     x='Social_Comparison_Frequency',
     y='Perceived_Stress_Score',
     errorbar=None,
@@ -152,7 +152,7 @@ plt.title('Comparação social e estresse')
 plt.subplot(1, 2, 2)
 
 sns.boxplot(
-    data=ds,
+    data=dataset,
     x='Social_Comparison_Frequency',
     y='Mental_Health_Index'
 )
@@ -308,9 +308,9 @@ corr = dataset[['Daily_Usage_Hours', 'Weekend_Extra_Hours','Sleep_Duration_Hours
      'Academic_Performance_GPA']].corr()
 
 sns.heatmap(
-    corr, 
-    annot=True, 
-    fmt='.2f', 
+    corr,
+    annot=True,
+    fmt='.2f',
     cmap='YlOrRd',
     vmin=-1,
     vmax=1)
