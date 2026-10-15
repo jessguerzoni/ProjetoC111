@@ -97,27 +97,26 @@ plt.show()
 
 print(dataset.columns)
 
-# Gráfico 1: média de horas de sono por uso noturno
-plt.figure(figsize=(16, 5))
+plt.figure(figsize=(12, 5))
 
-plt.subplot(1, 3, 1)
+# Gráfico 1: distribuição da qualidade do sono
+plt.subplot(1, 2, 1)
 
-sns.barplot(
-    data=dataset,
+sns.boxplot(
+    data=ds,
     x='Late_Night_Usage',
-    y='Sleep_Duration_Hours',
-    errorbar=None
+    y='Sleep_Quality_Score'
 )
 
 plt.xlabel('Uso noturno das redes sociais')
-plt.ylabel('Média de horas de sono')
-plt.title('Duração do sono por uso noturno')
+plt.ylabel('Qualidade do sono')
+plt.title('Qualidade do sono por uso noturno')
 
-# Gráfico 2: distribuição das horas de sono
-plt.subplot(1, 3, 2)
+# Gráfico 2: distribuição da duração do sono
+plt.subplot(1, 2, 2)
 
 sns.histplot(
-    data=dataset,
+    data=ds,
     x='Sleep_Duration_Hours',
     hue='Late_Night_Usage',
     kde=True
