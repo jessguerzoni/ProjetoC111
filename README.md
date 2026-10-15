@@ -20,3 +20,5 @@ Impact of Social Media on Life
 9 - Quais faixas etárias apresentam maior tempo diário de uso das redes sociais e maior uso adicional nos finais de semana?\
 10 - Quais variáveis numéricas apresentam maior relação entre si?
 
+Sendo as perguntas 1, 2, 4, 6 e 8 as selecionadas para apresentação
+
