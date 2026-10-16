@@ -163,7 +163,7 @@ plt.title('Comparação social e saúde mental')
 plt.show()
 
 #07- O tipo de dispositivo está relacionado ao tempo de uso das redes sociais e à qualidade do sono?
-
+# Box plot para comparar o tempo de uso por dispositivo
 plt.figure(figsize=(10, 6))
 sns.boxplot(
     data = dataset,
@@ -176,11 +176,13 @@ plt.legend(title='Nível acadêmico', bbox_to_anchor=(1.02, 1),loc='upper left')
 plt.tight_layout()
 plt.show()
 
+# Filtrar somente os estudantes que utilizam smartphones
 filtro_smartphones = dataset['Device_Type'].str.contains('Smartphone')
 smartphones = dataset[filtro_smartphones]
 
 notas, quantidade_notas = np.unique(smartphones['Sleep_Quality_Score'],return_counts=True)
 
+# Subplot 1: gráfico de barras sobre qualidade do sono em usuários de smartphones 
 plt.figure(figsize=(16, 5))
 plt.subplot(1, 3, 1)
 plt.bar(notas, quantidade_notas)
@@ -188,22 +190,26 @@ plt.xlabel('Nota de qualidade do sono')
 plt.ylabel('Quantidade de estudantes')
 plt.title('Qualidade do sono dos usuários de smartphones')
 
+# Filtrar somente os estudantes que utilizam tablets
 filtro_tablet = dataset['Device_Type'].str.contains('Tablet')
 tablets = dataset[filtro_tablet]
 
 notasT, quantidade_notasT = np.unique(tablets['Sleep_Quality_Score'],return_counts=True)
 
+# Subplot 2: gráfico de barras sobre qualidade do sono em usuários de tablets 
 plt.subplot(1, 3, 2)
 plt.bar(notasT, quantidade_notasT)
 plt.xlabel('Nota de qualidade do sono')
 plt.ylabel('Quantidade de estudantes')
 plt.title('Qualidade do sono dos usuários de tablets')
 
+# Filtrar somente os estudantes que utilizam pc
 filtro_pc = dataset['Device_Type'].str.contains('Laptop/PC')
 pc = dataset[filtro_pc]
 
 notasPC, quantidade_notasPC = np.unique(pc['Sleep_Quality_Score'],return_counts=True)
 
+# Subplot 3: gráfico de barras sobre qualidade do sono em usuários de laptop/pc 
 plt.subplot(1, 3, 3)
 plt.bar(notasPC, quantidade_notasPC)
 plt.xlabel('Nota de qualidade do sono')
